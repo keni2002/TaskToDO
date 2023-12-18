@@ -1,0 +1,25 @@
+{
+  "name": "tasktodo",
+  "version": "1.0.0",
+  "description": "an express bakend for TaskToDo app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keni2002/TaskToDO.git"
+  },
+  "keywords": [
+    "expressJs",
+    "passport",
+    "jwt",
+    "sequelize"
+  ],
+  "author": "Li Keny",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/keni2002/TaskToDO/issues"
+  },
+  "homepage": "https://github.com/keni2002/TaskToDO#readme"
+}
