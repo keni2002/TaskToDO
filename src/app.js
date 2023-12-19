@@ -29,15 +29,10 @@ app.use(mid.notFound);
 app.use(mid.errorHandler);
 
 //SERVeR
-(async () => {
-  try {
-      await db.authenticate();
-      console.log("Connection has been established successfully")
+db.sequelize.sync()
+    .then(()=>console.log("OK"))
+    .catch((err)=>console.log('NO ok: '+ err.message))
 
-  } catch (error) {
-      console.log("Unable");
-  }
-})();
 
 
 const port = process.env.PORT || 5000;
