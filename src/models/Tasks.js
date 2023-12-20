@@ -15,6 +15,15 @@ module.exports = (sequelize, Sequelize) => {
         checked: {
             type: Sequelize.DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        userId: {
+            type: Sequelize.DataTypes.UUID,
+            allowNull: false,
+            references:{
+                model: 'users',
+                key: 'id'
+            } 
+            
         }
     });
     return Tasks

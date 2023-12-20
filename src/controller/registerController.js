@@ -1,10 +1,10 @@
 const Users = require('../database').Users;
 const bcrypt = require('bcrypt')
-
+const { v4: uuidv4 } = require('uuid')
 exports.registerController = async (req, res) => {
     const { user, password } = req.body;
-    if(!user || !password ){
-        return res.json({message: "something Empty"})
+    if (!user || !password) {
+        return res.json({ message: "something Empty" })
     }
     const isExists = await Users.findOne({ where: { user } }).catch(
         (err) => {
@@ -18,14 +18,14 @@ exports.registerController = async (req, res) => {
     //generating hard security hash
     const saltRounds = 11
     const newPass = bcrypt.hashSync(password, saltRounds);
-
-    const newUser = new Users({ user, password: newPass });
+    const id = uuidv4();
+    const newUser = new Users({id, user, password: newPass });
     const savedUser = await newUser.save().catch((err) => {
         console.log('Error: ', err);
         return res.status(500).json({ error: "Cannot register user at the moment!" });
     });
 
-    if (savedUser){
+    if (savedUser) {
         return res.json({ message: "Thanks for registering" });
-    } 
+    }
 }
