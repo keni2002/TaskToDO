@@ -5,17 +5,20 @@ const Tasks = require('../database').Tasks;
 
 exports.getTasksController = async (req, res) => {
     const id = req.user.id;
-    const listTasks = await Tasks.findAll({ where: { userId: id } })
+    const listTasks = await Tasks.findAll({ where: {userId:id } })
     res.json(listTasks)
 }
 exports.getOneController = async (req, res) => {
     const id = req.params.id;
-    const task = await Tasks.findOne({ where: { userId: id  } });
-    res.json(task);
+    const userId = req.user.id
+    const task = await Tasks.findOne({ where: { id, userId} });
+    res.json(task == null ? {message: "not found"}:task);
 }
 exports.updateTaskController = async (req, res) => {
     const id = req.params.id;
-    const task = await Tasks.findOne({ where: { userId: id  } });
+    console.log(id)
+    const userId = req.user.id;
+    const task = await Tasks.findOne({ where: { id,userId  } });
     if(!task) {
         return res.status(400).json({message: "task not found"})
     }
@@ -26,7 +29,7 @@ exports.updateTaskController = async (req, res) => {
     }
     const ok = await Tasks.update({ title, content, targetdate },
         {
-            where: { userId: id }
+            where: { id }
         })
     if(ok) {
         return res.json({message: "updated successfull"})
@@ -35,15 +38,12 @@ exports.updateTaskController = async (req, res) => {
 }
 exports.deleteTaskController = async (req, res) => {
     const id = req.params.id;
-    const task = await Tasks.findOne({ where: { userId: id  } });
+    const userId = req.user.id
+    const task = await Tasks.findOne({ where: { id,userId} });
     if(!task) {
         return res.status(400).json({message: "task not found"})
     }
-    const ok = await Tasks.destroy({
-        where: {
-            where: { userId: id }
-        }
-    })
+    const ok = await task.destroy();
     if(ok) {
         return res.json({message: "deleted successfull"})
     }
