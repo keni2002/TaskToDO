@@ -1,6 +1,7 @@
 const express = require('express');
 const app  = express();
 require('dotenv').config();
+require('./auth/password')
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
